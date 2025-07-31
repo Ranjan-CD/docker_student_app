@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:latest
+    container_name: StudentApp-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 2001
+      POSTGRES_DB: batchdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - s-network
+
+  app:
+    build: .  # Assumes a Dockerfile exists in the current directory
+    container_name: student-app
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/batchdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 2001
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    ports:
+      - "8080:8080"
+    networks:
+      - s-network
+
+volumes:
+  postgres_data:
+
+networks:
+  s-network:
+    driver: bridge

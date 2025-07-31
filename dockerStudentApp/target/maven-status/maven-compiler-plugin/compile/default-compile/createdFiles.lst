@@ -1,0 +1,4 @@
+com\docker_studentApp\demo\StudentController.class
+com\docker_studentApp\demo\StudentRepo.class
+com\docker_studentApp\demo\DemoApplication.class
+com\docker_studentApp\demo\Student.class
